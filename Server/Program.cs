@@ -1,6 +1,7 @@
 global using Server.Models;
 global using Server.Interfaces;
 global using Server.Services;
+global using Server.Config;
 
 var builder = WebApplication.CreateBuilder(args);
 
