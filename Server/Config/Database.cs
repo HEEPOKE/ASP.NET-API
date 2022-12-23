@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using Server.Models;
 
 namespace Server.Config
 {
@@ -19,7 +20,7 @@ namespace Server.Config
             optionsBuilder.UseMySQL("server=127.0.0.1:3306;database=dotnet;uid=root;pwd=5555;");
         }
 
-        public DbSet<Product> Products { get; set; }
+        public DbSet<Product> Products { get; set; } = null!;
     }
 
 }
