@@ -16,7 +16,7 @@ namespace Server.Config
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             base.OnConfiguring(optionsBuilder);
-            optionsBuilder.UseMySQL("");
+            optionsBuilder.UseMySQL("server=127.0.0.1:3306;database=dotnet;uid=root;pwd=5555;");
         }
 
         public DbSet<Product> Products { get; set; }
