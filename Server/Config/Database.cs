@@ -16,10 +16,10 @@ namespace Server.Config
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             base.OnConfiguring(optionsBuilder);
-            optionsBuilder.UseSqlServer("Server=.\\SQLExpress;Database=dotnet;Trusted_Connection=true;TrustServerCertificate=true");
+            optionsBuilder.UseMySQL("");
         }
 
-        // public DbSet<WeatherForecast> Forecasts { get; set; }
+        public DbSet<Product> Products { get; set; }
     }
 
 }
