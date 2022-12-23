@@ -9,10 +9,10 @@ namespace Server.Models
     public class Product
     {
         [Key]
-        public string Name { get; set; } = string.Empty;
-
+        public string? Name { get; set; }
+        [Required]
         public string? Description { get; set; }
-
+        [Required]
         public int? price { get; set; }
     }
 }
