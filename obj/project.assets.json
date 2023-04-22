@@ -553,11 +553,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\HEEPOKE\\Documents\\GitHub\\DotNET-CORE7-Api\\app\\app.csproj",
+      "projectUniqueName": "C:\\Users\\HEEPOKE\\Documents\\GitHub\\DotNET-CORE7-Api\\app.csproj",
       "projectName": "app",
-      "projectPath": "C:\\Users\\HEEPOKE\\Documents\\GitHub\\DotNET-CORE7-Api\\app\\app.csproj",
+      "projectPath": "C:\\Users\\HEEPOKE\\Documents\\GitHub\\DotNET-CORE7-Api\\app.csproj",
       "packagesPath": "C:\\Users\\HEEPOKE\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\HEEPOKE\\Documents\\GitHub\\DotNET-CORE7-Api\\app\\obj\\",
+      "outputPath": "C:\\Users\\HEEPOKE\\Documents\\GitHub\\DotNET-CORE7-Api\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\HEEPOKE\\AppData\\Roaming\\NuGet\\NuGet.Config",
