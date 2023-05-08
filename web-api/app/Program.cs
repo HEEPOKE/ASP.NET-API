@@ -10,9 +10,7 @@ builder.Services.AddDbContext<DataContext>(options =>
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-
 builder.Services.AddScoped<DbContext, DataContext>();
-// builder.Services.AddScoped<UserController>();
 
 var app = builder.Build();
 
