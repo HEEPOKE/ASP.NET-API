@@ -1,29 +1,30 @@
 using Microsoft.Extensions.Configuration;
 using System;
+using System.Collections.Generic;
 
 namespace app.Configs;
 
-public class Config
+public class AppConfig
 {
-    private readonly IConfiguration _configuration;
+    public string? DB_CONNECT { get; set; }
+}
 
-    public Config()
+public static class AppConfigHelper
+{
+    private static readonly IConfiguration _configuration;
+    private static readonly AppConfig _appConfig;
+
+    static AppConfigHelper()
     {
         _configuration = new ConfigurationBuilder()
             .AddJsonFile("appsettings.json", optional: true)
             .Build();
-    }
 
-    public string DB_CONNECT => GetEnvironmentVariable("DB_CONNECT");
-
-    private string GetEnvironmentVariable(string key)
-    {
-        var value = _configuration?[key];
-        if (string.IsNullOrEmpty(value))
+        _appConfig = new AppConfig
         {
-            value = Environment.GetEnvironmentVariable(key);
-        }
-
-        return value;
+            DB_CONNECT = _configuration["DB_CONNECT"],
+        };
     }
+
+    public static string? DB_CONNECT => _appConfig.DB_CONNECT;
 }
