@@ -3,10 +3,16 @@ using app.Configs;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddDbContext<DataContext>(o => o.UseNpgsql(builder.Configuration.GetConnectionString("DB_CONNECT")));
+builder.Services.AddDbContext<DataContext>(options =>
+    options.UseNpgsql(builder.Configuration.GetConnectionString("DB_CONNECT"))
+);
+
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+builder.Services.AddScoped<DbContext, DataContext>();
+// builder.Services.AddScoped<UserController>();
 
 var app = builder.Build();
 
