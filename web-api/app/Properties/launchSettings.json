@@ -14,9 +14,10 @@
       "launchBrowser": true,
       "launchUrl": "swagger",
       "applicationUrl": "http://localhost:5258",
-      "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
-      },
+        "environmentVariables": {
+            "ASPNETCORE_ENVIRONMENT": "Development",
+            "MyConnectionString": "Host=127.0.0.1;Database=dotnet;Username=yoyo;Password=5555"
+        },
       "dotnetRunMessages": true
     },
     "https": {
