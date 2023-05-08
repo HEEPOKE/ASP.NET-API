@@ -1,11 +1,5 @@
 namespace app.Models;
 
-public enum UserRole
-{
-    Admin,
-    User
-}
-
 public class User
 {
     public int Id { get; set; }
@@ -13,4 +7,12 @@ public class User
     public string? Password { get; set; }
     public string? Tel { get; set; }
     public UserRole Role { get; set; }
+    public DateTime CreatedAt { get; set; }
+    public DateTime UpdatedAt { get; set; }
+}
+
+public enum UserRole
+{
+    Admin = 0,
+    User = 1
 }
