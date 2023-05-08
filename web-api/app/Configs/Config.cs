@@ -1,6 +1,5 @@
 using Microsoft.Extensions.Configuration;
 using System;
-using System.Collections.Generic;
 
 namespace app.Configs;
 
@@ -25,6 +24,5 @@ public static class AppConfigHelper
             DB_CONNECT = _configuration["DB_CONNECT"],
         };
     }
-
     public static string? DB_CONNECT => _appConfig.DB_CONNECT;
 }
