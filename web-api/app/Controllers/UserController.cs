@@ -1,12 +1,15 @@
+using System.Net;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using app.Models;
+using app.Models.Response;
 using app.services;
 
 namespace app.Controllers
 
 {
     [ApiController]
+    [Produces("application/json")]
     [Route("api/[controller]")]
     public class UserController : ControllerBase
     {
@@ -23,19 +26,28 @@ namespace app.Controllers
         public async Task<ActionResult<IEnumerable<User>>> GetUsers()
         {
             var users = await _context.Set<User>()
-                                      .Select(u => new
-                                      {
-                                          u.Id,
-                                          u.Email,
-                                          u.Username,
-                                          u.Tel,
-                                          u.Role,
-                                          u.CreatedAt,
-                                          u.UpdatedAt
-                                      })
-                                      .ToListAsync();
+                .Select(u => new User
+                {
+                    Id = u.Id,
+                    Email = u.Email,
+                    Username = u.Username,
+                    Tel = u.Tel,
+                    Role = u.Role,
+                    CreatedAt = u.CreatedAt,
+                    UpdatedAt = u.UpdatedAt
+                })
+                .ToListAsync();
 
-            return Ok(users);
+            var response = new UserMessageResponse
+            {
+                Message = "Success",
+                Data = users
+            };
+
+            return new JsonResult(response)
+            {
+                StatusCode = (int)HttpStatusCode.OK
+            };
         }
 
         [HttpGet("{id}")]
@@ -48,7 +60,16 @@ namespace app.Controllers
                 return NotFound();
             }
 
-            return Ok(user);
+            var response = new UserMessageResponse
+            {
+                Message = "Success",
+                Data = (IEnumerable<User>)user
+            };
+
+            return new JsonResult(response)
+            {
+                StatusCode = (int)HttpStatusCode.OK
+            };
         }
 
         [HttpPost]
@@ -97,7 +118,7 @@ namespace app.Controllers
                 try
                 {
                     await _context.SaveChangesAsync();
-                    return NoContent();
+                    return CreatedAtAction(nameof(GetUserById), new { id = updatedUser.Id });
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -128,7 +149,15 @@ namespace app.Controllers
             _context.Set<User>().Remove(user);
             await _context.SaveChangesAsync();
 
-            return NoContent();
+            var response = new UserMessageResponse
+            {
+                Message = "Success"
+            };
+
+            return new JsonResult(response)
+            {
+                StatusCode = (int)HttpStatusCode.OK
+            };
         }
 
     }
