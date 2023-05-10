@@ -63,7 +63,7 @@ namespace app.Controllers
             var response = new UserMessageResponse
             {
                 Message = "Success",
-                Data = (IEnumerable<User>)user
+                Data = new List<User> { user }
             };
 
             return new JsonResult(response)
@@ -71,6 +71,7 @@ namespace app.Controllers
                 StatusCode = (int)HttpStatusCode.OK
             };
         }
+
 
         [HttpPost]
         public async Task<ActionResult<User>> CreateUser(User user)
