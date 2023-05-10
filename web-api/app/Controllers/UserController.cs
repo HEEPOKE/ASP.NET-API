@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using BCrypt.Net;
 using app.Models;
 using app.services;
 
@@ -22,10 +23,21 @@ namespace app.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<User>>> GetUsers()
         {
-            var users = await _context.Set<User>().ToListAsync();
+            var users = await _context.Set<User>()
+                                      .Select(u => new
+                                      {
+                                          u.Id,
+                                          u.Email,
+                                          u.Username,
+                                          u.Tel,
+                                          u.Role,
+                                          u.CreatedAt,
+                                          u.UpdatedAt
+                                      })
+                                      .ToListAsync();
+
             return Ok(users);
         }
-
 
         [HttpGet("{id}")]
         public async Task<ActionResult<User>> GetUserById(int id)
@@ -47,6 +59,10 @@ namespace app.Controllers
             {
                 return BadRequest();
             }
+
+            string hashedPassword = BCrypt.Net.BCrypt.HashPassword(user.Password);
+
+            user.Password = hashedPassword;
 
             _context.Set<User>().Add(user);
             await _context.SaveChangesAsync();
