@@ -55,14 +55,15 @@ namespace app.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateUser(int id, User updatedUser)
+        public async Task<IActionResult> UpdateUser(string id, User updatedUser)
         {
-            if (updatedUser == null || id != updatedUser.Id)
+            if (updatedUser == null || id == null)
             {
                 return BadRequest();
             }
 
-            var existingUser = await _context.Set<User>().FindAsync(id);
+            var numId = int.Parse(id);
+            var existingUser = await _context.Set<User>().FindAsync(numId);
 
             if (existingUser == null)
             {
@@ -85,7 +86,7 @@ namespace app.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!_userService.UserExists(id))
+                    if (!_userService.UserExists(numId))
                     {
                         return NotFound();
                     }
