@@ -10,7 +10,7 @@ namespace app.Controllers
 {
     [ApiController]
     [Produces("application/json")]
-    [Route("api/[controller]")]
+    [Route("/users")]
     public class UserController : ControllerBase
     {
         private readonly DbContext _context;
@@ -22,7 +22,7 @@ namespace app.Controllers
             _userService = new UserServices(context);
         }
 
-        [HttpGet]
+        [HttpGet("list")]
         public async Task<ActionResult<IEnumerable<User>>> GetUsers()
         {
             var users = await _context.Set<User>()
@@ -50,7 +50,7 @@ namespace app.Controllers
             };
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("find/{id}")]
         public async Task<ActionResult<User>> GetUserById(int id)
         {
             var user = await _context.Set<User>().SingleOrDefaultAsync(u => u.Id == id);
@@ -73,7 +73,7 @@ namespace app.Controllers
         }
 
 
-        [HttpPost]
+        [HttpPost("add")]
         public async Task<ActionResult<User>> CreateUser(User user)
         {
             if (user == null)
@@ -91,7 +91,7 @@ namespace app.Controllers
             return CreatedAtAction(nameof(GetUserById), new { id = user.Id }, user);
         }
 
-        [HttpPut("{id}")]
+        [HttpPut("update/{id}")]
         public async Task<IActionResult> UpdateUser(string id, User updatedUser)
         {
             if (updatedUser == null || id == null)
@@ -137,7 +137,7 @@ namespace app.Controllers
             return BadRequest(ModelState);
         }
 
-        [HttpDelete("{id}")]
+        [HttpDelete("delete/{id}")]
         public async Task<ActionResult> DeleteUser(int id)
         {
             var user = await _context.Set<User>().SingleOrDefaultAsync(u => u.Id == id);
@@ -155,10 +155,7 @@ namespace app.Controllers
                 Message = "Success"
             };
 
-            return new JsonResult(response)
-            {
-                StatusCode = (int)HttpStatusCode.OK
-            };
+            return Ok(response);
         }
 
     }

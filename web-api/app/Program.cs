@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using app.Configs;
+using app;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -19,7 +20,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-
+app.UsePathBase("/apis");
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
