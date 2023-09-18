@@ -1,5 +1,13 @@
 # start
 
+## Create DB
+
+```bash
+docker compose  up -d
+```
+
+## Build && Install && migrate
+
 ```bash
 dotnet build
 ```

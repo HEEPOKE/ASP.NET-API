@@ -1,0 +1,17 @@
+version: "3.9"
+services:
+  postgres:
+    image: postgres:latest
+    container_name: dotnet-db
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: yoyo
+      POSTGRES_PASSWORD: yoyo5555
+      POSTGRES_DB: dotnet
+    networks:
+      - Heepoke
+
+networks:
+  Heepoke:
+    driver: bridge
