@@ -21,9 +21,6 @@ if (app.Environment.IsDevelopment())
 }
 app.UsePathBase("/apis");
 app.UseHttpsRedirection();
-
 app.UseAuthorization();
-
 app.MapControllers();
-
 app.Run();
