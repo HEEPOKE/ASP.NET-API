@@ -3,12 +3,14 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using app.Models;
 using app.Models.Response;
-using app.services;
+using app.Services;
+
 
 namespace app.Controllers
 
 {
     [ApiController]
+    [Consumes("application/json")]
     [Produces("application/json")]
     [Route("/users")]
     public class UserController : ControllerBase
@@ -22,7 +24,14 @@ namespace app.Controllers
             _userService = new UserServices(context);
         }
 
+        /// <summary>
+        /// Gets a list of users.
+        /// </summary>
+        /// <returns>A list of users.</returns>
         [HttpGet("list")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [Tags("Users")]
         public async Task<ActionResult<IEnumerable<User>>> GetUsers()
         {
             var users = await _context.Set<User>()
@@ -50,7 +59,14 @@ namespace app.Controllers
             };
         }
 
+        /// <summary>
+        /// Gets a list of users.
+        /// </summary>
+        /// <returns>A list of users.</returns>
         [HttpGet("find/{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [Tags("Users")]
         public async Task<ActionResult<User>> GetUserById(int id)
         {
             var user = await _context.Set<User>().SingleOrDefaultAsync(u => u.Id == id);
@@ -73,7 +89,14 @@ namespace app.Controllers
         }
 
 
+        /// <summary>
+        /// Gets a list of users.
+        /// </summary>
+        /// <returns>A list of users.</returns>
         [HttpPost("add")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [Tags("Users")]
         public async Task<ActionResult<User>> CreateUser(User user)
         {
             if (user == null)
@@ -91,7 +114,14 @@ namespace app.Controllers
             return CreatedAtAction(nameof(GetUserById), new { id = user.Id }, user);
         }
 
+        /// <summary>
+        /// Gets a list of users.
+        /// </summary>
+        /// <returns>A list of users.</returns>
         [HttpPut("update/{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [Tags("Users")]
         public async Task<IActionResult> UpdateUser(string id, User updatedUser)
         {
             if (updatedUser == null || id == null)
@@ -137,7 +167,14 @@ namespace app.Controllers
             return BadRequest(ModelState);
         }
 
+        /// <summary>
+        /// Gets a list of users.
+        /// </summary>
+        /// <returns>A list of users.</returns>
         [HttpDelete("delete/{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [Tags("Users")]
         public async Task<ActionResult> DeleteUser(int id)
         {
             var user = await _context.Set<User>().SingleOrDefaultAsync(u => u.Id == id);

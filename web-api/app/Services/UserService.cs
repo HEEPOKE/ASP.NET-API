@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using app.Models;
 
-namespace app.services;
+namespace app.Services;
 
 public class UserServices
 {

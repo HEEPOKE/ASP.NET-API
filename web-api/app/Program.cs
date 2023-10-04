@@ -1,6 +1,8 @@
-﻿using app.Configs;
+﻿using System.Reflection;
+using app.Configs;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
+using Swashbuckle.AspNetCore.Filters;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -32,14 +34,35 @@ builder.Services.AddSwaggerGen(options =>
             Url = new Uri("https://example.com/license")
         }
     });
+
+    string xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+    string xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+
+    options.IncludeXmlComments(xmlPath);
+    options.OperationFilter<SecurityRequirementsOperationFilter>(true, "Bearer");
+    options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+    {
+        Description = "Standard Authorization header using the Bearer scheme (JWT). Example: \"bearer {token}\"",
+        Name = "Authorization",
+        In = ParameterLocation.Header,
+        Type = SecuritySchemeType.ApiKey,
+        Scheme = "Bearer"
+    });
+    options.OperationFilter<AppendAuthorizeToSummaryOperationFilter>();
 });
 
 var app = builder.Build();
 
-if (app.Environment.IsDevelopment())    
+if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
-    app.UseSwaggerUI();
+    app.UseSwaggerUI(c =>
+{
+    c.SwaggerEndpoint("/swagger/v1/swagger.json", "V1");
+
+    c.ConfigObject.AdditionalItems["filter"] = true;
+    c.ConfigObject.AdditionalItems["docExpansion"] = "list";
+});
 }
 
 app.UsePathBase("/apis");
